@@ -1,9 +1,14 @@
 import React from 'react'
-import { Alert, Button, Text, TextInput, View } from 'react-native'
+import { Alert, View } from 'react-native'
 
+import MyInput from '../../components/myInput'
 import styles from './styles'
+import MyButton from '../../components/myButton'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
  export default function User(){
+
+    const navigation = useNavigation<NavigationProp<any>>()
 
     const [name, setName] = React.useState('')
     const [username, setUsername] = React.useState('')
@@ -27,42 +32,24 @@ import styles from './styles'
             return
         }
 
-        if (password != passwordSave){
+        if (password !== passwordSave){
             Alert.alert('As senhas não conferem')
             return
         }
 
-        if (username === 'andre' && password === '123456'){
-            Alert.alert('Usuário salvo com sucesso')
-        }
+        Alert.alert('Usuário salvo com sucesso')
+        navigation.goBack()
 
     }
 
     return(
         <View style={styles.container}>
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Nome:</Text>
-                <TextInput style={styles.input} onChangeText={(setName)}/>
-            </View>
+            <MyInput label='Nome' value={name} onChangeText={setName}/>
+            <MyInput label='Login' value={username} onChangeText={setUsername}/>
+            <MyInput label='Senha' value={password} onChangeText={setPassword} secureTextEntry/>
+            <MyInput label='Confirmar Senha' value={passwordSave} onChangeText={setPasswordSave} secureTextEntry/>
 
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Login:</Text>
-                <TextInput style={styles.input} onChangeText={(setUsername)}/>
-            </View>
-
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Senha:</Text>
-                <TextInput style={styles.input} onChangeText={setPassword} secureTextEntry/>
-            </View>
-
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Confirmar Senha:</Text>
-                <TextInput style={styles.input} onChangeText={setPasswordSave} secureTextEntry/>
-            </View>
-
-            <View style={styles.buttonView}>
-                <Button title='Salvar' onPress={save}/>
-            </View>
+            <MyButton title='Salvar' onPress={save}/>
         </View>
     )
 }

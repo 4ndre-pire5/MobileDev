@@ -1,9 +1,14 @@
 import React from 'react'
-import { Alert, Button, Text, TextInput, View } from 'react-native'
+import { Alert, View } from 'react-native'
 
 import styles from './styles'
+import MyInput from '../../components/myInput'
+import MyButton from '../../components/myButton'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 export default function Login(){
+
+    const navigation = useNavigation<NavigationProp<any>>()
 
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
@@ -15,7 +20,7 @@ export default function Login(){
         }
 
         if (username === 'uedsonreis' && password === '123456'){
-            Alert.alert('Login realizado com sucesso')
+            navigation.navigate('home')
         }
         else{
             Alert.alert('Login ou senha inválido(a)')
@@ -24,19 +29,10 @@ export default function Login(){
 
     return(
         <View style={styles.container}>
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Login:</Text>
-                <TextInput style={styles.input} onChangeText={(setUsername)}/>
-            </View>
+            <MyInput label='Login' onChangeText={setUsername} />
+            <MyInput label='Senha' onChangeText={setPassword} secureTextEntry/>
 
-            <View style={styles.inputView}>
-                <Text style={styles.label}>Senha:</Text>
-                <TextInput style={styles.input} onChangeText={setPassword} secureTextEntry/>
-            </View>
-
-            <View style={styles.buttonView}>
-                <Button title='Entrar' onPress={signIn}/>
-            </View>
+            <MyButton title='Entrar' onPress={signIn}/>
         </View>
     )
 }
