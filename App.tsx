@@ -12,8 +12,7 @@ export default function App(){
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="login" component={LoginPage} options={{title: 'Acesso'}}/>
-        <Stack.Screen name="home" component={HomePage} options={{title: 'Usuários'}}
-        />
+        <Stack.Screen name="home" component={HomePage} options={{title: 'Usuários'}}/>
         <Stack.Screen name="user" component={UserPage}/>
       </Stack.Navigator>
     </NavigationContainer>
