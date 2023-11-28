@@ -5,6 +5,7 @@ import MyInput from '../../components/myInput'
 import styles from './styles'
 import MyButton from '../../components/myButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
  export default function User(){
 
@@ -14,7 +15,16 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [passwordSave, setPasswordSave] = React.useState('')
+    const [showPassword, setShowPassword] = React.useState(false)
+    const [showPasswordSave, setShowPasswordSave] = React.useState(false)
 
+    const toggleShowPassord = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const toggleShowPassordSave = () => {
+        setShowPasswordSave(!showPasswordSave)
+    }
 
     function save(){
         if (!name || name.trim() === ''){
@@ -46,10 +56,33 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
         <View style={styles.container}>
             <MyInput label='Nome' value={name} onChangeText={setName}/>
             <MyInput label='Login' value={username} onChangeText={setUsername}/>
-            <MyInput label='Senha' value={password} onChangeText={setPassword} secureTextEntry/>
-            <MyInput label='Confirmar Senha' value={passwordSave} onChangeText={setPasswordSave} secureTextEntry/>
+
+            <View style={styles.password}>
+                <MyInput label='Senha' value={password} onChangeText={setPassword} secureTextEntry={!showPassword}/>
+                <MaterialCommunityIcons
+                    name={showPassword ? 'eye-off' : 'eye'}
+                    size={28}
+                    color="#aaa"
+                    onPress={toggleShowPassord}
+                    style={styles.icon}
+                />   
+            </View>
+
+            <View style={styles.password}>
+                <MyInput label='Confirmar Senha' value={passwordSave} onChangeText={setPasswordSave} secureTextEntry={!showPasswordSave}/>
+                <MaterialCommunityIcons
+                    name={showPasswordSave ? 'eye-off' : 'eye'}
+                    size={28}
+                    color="#aaa"
+                    onPress={toggleShowPassordSave}
+                    style={styles.icon}
+                />
+            </View>
 
             <MyButton title='Salvar' onPress={save}/>
+
+            
         </View>
+    
     )
 }
