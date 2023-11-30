@@ -1,10 +1,12 @@
 import React from 'react'
 import { Alert, View } from 'react-native'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 import styles from './styles'
 import MyInput from '../../components/myInput'
 import MyButton from '../../components/myButton'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { authService } from '../../services/auth.service'
+
 
 export default function Login(){
 
@@ -19,12 +21,15 @@ export default function Login(){
             return
         }
 
-        if (username === 'uedsonreis' && password === '123456'){
-            navigation.navigate('home')
-        }
-        else{
-            Alert.alert('Login ou senha inválido(a)')
-        }
+        authService.login(username, password).then(logged =>{
+            if (logged){
+                navigation.navigate('home')
+            }
+            else{
+                Alert.alert('Login ou senha inválido(a)')
+            }
+        })
+
     }
 
     return(

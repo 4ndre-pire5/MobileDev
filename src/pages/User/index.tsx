@@ -6,6 +6,7 @@ import styles from './styles'
 import MyButton from '../../components/myButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { userService } from '../../services/user.service'
 
  export default function User(){
 
@@ -47,9 +48,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
             return
         }
 
-        Alert.alert('Usuário salvo com sucesso')
-        navigation.goBack()
-
+        userService.create({ name, username, password }).then(saved => {
+            Alert.alert('Title', 'Usuário salvo com sucesso')
+            navigation.goBack()
+            
+        }).catch(error => navigation.navigate('login'))
     }
 
     return(
