@@ -69,6 +69,21 @@ class UserService{
 
     }
 
+    public async delete(id: number) {
+        const response = await fetch(`${this.url}/${id}`, {
+            method: 'DELETE',
+            headers: await this.getHeaders(),
+        })
+
+        if (response.status === 204) {
+            return true
+        }
+        else if (response.status === 401) {
+            const data = await response.json()
+            throw new Error(data.message)
+        }
+
+    }
 
 }
 

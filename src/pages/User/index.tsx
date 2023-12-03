@@ -58,9 +58,8 @@ import { userService } from '../../services/user.service'
             }).catch(
                 error => navigation.navigate('login')
             )
-
         }
-        else {
+        else{
             if (!username || username.trim() === ''){
                 Alert.alert('Usuário é obrigatório')
                 return
@@ -84,6 +83,15 @@ import { userService } from '../../services/user.service'
             )
         }
 
+    }
+
+    const deleteUser = () => {
+        if (user) {
+            userService.delete(user.id)
+                .then(deleted => {
+                    Alert.alert('Title', 'Usuário apagado com sucesso')
+                })
+        }
     }
 
     return(
@@ -120,6 +128,10 @@ import { userService } from '../../services/user.service'
             </View>
 
             <MyButton title='Salvar' onPress={save}/>
+
+            {user && (
+                <MyButton title='Apagar' onPress={deleteUser}/>
+            )}
 
             
         </View>
